@@ -7,5 +7,7 @@ namespace PracticaASPCRUD.Models.Entities
 {
     public class Cargo
     {
+        public int CargoId { get; set; }
+        public string Nombre { get; set; }
     }
 }

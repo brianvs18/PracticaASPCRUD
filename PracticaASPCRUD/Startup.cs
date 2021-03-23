@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PracticaASPCRUD.Models.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,10 @@ namespace PracticaASPCRUD
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            var conexion = Configuration["ConnectionStrings:conexion_sqlserver"];
+            //Se crea como servicio para utilizarla en todo el proyecto
+            services.AddDbContext<DbContextPractica>(options => options.UseSqlServer(conexion));
+            services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +56,7 @@ namespace PracticaASPCRUD
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Empleados}/{action=Index}/{id?}");
             });
         }
     }
